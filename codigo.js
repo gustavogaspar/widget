@@ -73,16 +73,16 @@
       bot=JSON.parse(retrievedObject);
       hiflag = bot['hiflag'];
       if(diff >= 120 || botuser!=user_id || hiflag==false){
-      //Bots.sendMessage("Hi");
-      //bot['hiflag']=true;
+      Bots.sendMessage("Hi");
+      bot['hiflag']=true;
       localStorage.setItem('bot', JSON.stringify(bot));
       }
       
   }); 
   
     Bots.init({ appId: appid,
-          businessName: 'Assistente Virtual',
-          //introductionText: '',
+          businessName: 'Asistente Virtual',
+          introductionText: 'Estoy aqui para que me preguntes lo que necesites',
          businessIconUrl: 'https://portalacindar-gse00014621.uscom-east-1.oraclecloud.com/static/avatar.png',
           buttonIconUrl: 'https://portalacindar-gse00014621.uscom-east-1.oraclecloud.com/static/avatar.png',
           backgroundImageUrl: images_URI+'/Images/WebWidget/bg.png',
@@ -90,7 +90,7 @@
               brandColor: '286090',
           },
           customText: {
-              headerText: 'Como posso ajudar?'
+              headerText: 'Hola! Como puedo ayudarte?'
           }
     }).then(function(){
       Bots.updateUser({
