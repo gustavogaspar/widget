@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+placeholderPublicPath="https://placeholder.public.path/"
+
+if [ -z "$1" ]
+then
+    echo "Please provide a path. (./configure <path>)"
+    exit 1
+fi
+
+# Make sure path ends with /
+newPublicPath="${1%/}/"
+
+outputFolder="${PWD}/`echo "$newPublicPath" | tr / _`"
+
+rm -rf "$outputFolder"
+mkdir "$outputFolder"
+
+# The following iteration supports spaces in filenames
+# See the following for more information: https://mywiki.wooledge.org/BashPitfalls#line-91
+while IFS= read -r -d '' filename; do
+    baseFilename=${filename#js-sdk/}
+    mkdir -p "$(dirname "$outputFolder/$baseFilename")"
+    LC_ALL=C sed "s|${placeholderPublicPath}|${newPublicPath}|g" "$filename" > "$outputFolder/$baseFilename"
+done < <(find js-sdk/ -type f -print0)
+
+echo "Done! Files are available in ${outputFolder}"
